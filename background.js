@@ -26,6 +26,7 @@ const setRandomInterval = (callback, lower, upper) => {
 
 // Listens to a click on the extension button.
 let toggle = false
+let randomIntervalID = null
 chrome.browserAction.onClicked.addListener(function(tab) {
     toggle = !toggle
     if (!toggle) {
@@ -33,7 +34,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         chrome.tabs.create({"url": "https://www.reddit.com/", "pinned": true})
         // Changes the image of the button.
         chrome.browserAction.setIcon({path: "refresh_on.png"})
-        setRandomInterval(function () {
+        randomIntervalID = setRandomInterval(function () {
             // Finds the tab that has been created and reloads it.
             chrome.tabs.query({"pinned": true, "url": "https://www.reddit.com/"}, function(tab) {
                 if (tab[0]) {
@@ -42,6 +43,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
             })
         }, 3000, 20000)
     } else {
+        randomIntervalID.clear
         chrome.browserAction.setIcon({path: "refresh_off.png"})
 
         // chrome.tabs.executeScript({code: "alert('test')"})
