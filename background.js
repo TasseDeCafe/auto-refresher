@@ -43,7 +43,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
             })
         }, 3000, 20000)
     } else {
-        randomIntervalID.clear
+        randomIntervalID.clear()
         chrome.browserAction.setIcon({path: "refresh_off.png"})
 
         // chrome.tabs.executeScript({code: "alert('test')"})
